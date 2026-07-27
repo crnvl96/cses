@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Usage: ./run <task-file>
+#   ./run 01-weird-algorithm.js
+#   ./run 01-weird-algorithm.js < custom-input.txt
+#
+# With tab-completion (source _run_completion in your shell):
+#   ./run 01<Tab>  →  ./run 01-weird-algorithm.js
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+TASK_FILE="$1"
+shift || true
+
+INPUT_FILE="$SCRIPT_DIR/00-input.txt"
+
+if [[ ! -f "$SCRIPT_DIR/$TASK_FILE" ]]; then
+  echo "Error: $TASK_FILE not found in $SCRIPT_DIR" >&2
+  exit 1
+fi
+
+if [[ $# -eq 0 ]]; then
+  # No extra args → pipe input.txt to node
+  exec node "$SCRIPT_DIR/$TASK_FILE" < "$INPUT_FILE"
+else
+  # Pass through any extra args (including redirected stdin)
+  exec node "$SCRIPT_DIR/$TASK_FILE" "$@"
+fi

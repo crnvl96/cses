@@ -1,18 +1,18 @@
-import { createInterface } from "readline";
-const rl = createInterface({ input: process.stdin });
+const readline = require("readline");
+const rl = readline.createInterface({ input: process.stdin });
 
-rl.on("line", (line: string) => {
+rl.on("line", (line) => {
   const n = parseInt(line);
-  const out: number[] = [];
+  const out = [];
 
-  function applyStep(n: number): number {
+  function applyStep(n) {
     if (n % 2 === 0) {
       return n / 2;
     }
     return n * 3 + 1;
   }
 
-  function applyProcess(n: number): string {
+  function applyProcess(n) {
     out.push(n);
     if (n === 1) {
       return out.join(" ");
