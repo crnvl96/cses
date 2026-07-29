@@ -11,7 +11,7 @@ rl.on("close", () => {
   lines.shift();
   const positions = lines.map((line) => line.split(" ").map((el) => +el));
 
-  const res = [];
+  let res = "";
 
   for (const position of positions) {
     const maxVal = Math.max(position[0], position[1]);
@@ -23,20 +23,18 @@ rl.on("close", () => {
 
     if (maxVal % 2 === 0) {
       if (idx === 0) {
-        res.push(el + delta);
+        res += `${el + delta}\n`;
       } else {
-        res.push(el - delta);
+        res += `${el - delta}\n`;
       }
     } else {
       if (idx === 0) {
-        res.push(el - delta);
+        res += `${el - delta}\n`;
       } else {
-        res.push(el + delta);
+        res += `${el + delta}\n`;
       }
     }
-
-    console.log("=".repeat(50));
   }
 
-  console.log(res.join(" "));
+  console.log(res);
 });
